@@ -17,7 +17,7 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({ item }) => {
   return (
     <CardContent className="flex flex-col lg:flex-row min-w-52">
       {errorMessage ? (
-        <div className="text-center">
+        <div className="text-center mt-6">
           <CircleX color="red" className="inline mr-2" />
           Error: {errorMessage.toString()}
         </div>
