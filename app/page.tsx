@@ -6,7 +6,6 @@ import PredCarousel from "@/components/PredCarousel";
 import { useFormState } from "react-dom";
 import { uploadImage } from "@/app/actions";
 import { FormDataType } from "@/lib/definitions";
-import { useEffect } from "react";
 
 const initialState: FormDataType[] = [];
 
