@@ -74,3 +74,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+.modal-close-button {
+  position: fixed; /* Use fixed to position relative to the viewport */
+  top: 1rem; /* Adjust as necessary */
+  right: 1rem; /* Adjust as necessary */
+  background: #fff; /* Choose a background that makes the button visible */
+  border: 1px solid #ccc; /* Add some border for visibility */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1010; /* Ensure it's above the modal content */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  display: block; /* Override the default display: none; for <dialog> */
+}
+
+
+.image-preview-container {
+  cursor: pointer;
+}

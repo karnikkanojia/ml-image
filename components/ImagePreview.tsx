@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, CircleX } from "lucide-react";
+// import Modal from "@/components/ImageModal";
 
 interface ImagePreviewProps {
   originalImage: File | string | undefined,
@@ -17,6 +18,7 @@ const getAzureStorageUrl = (fileName: string) => {
 
 const ImagePreview: React.FC<ImagePreviewProps> = ({ originalImage, gradImage }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const imageToUse = gradImage || originalImage;
@@ -29,27 +31,29 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ originalImage, gradImage })
     if (imageToUse instanceof File) {
       const url = URL.createObjectURL(imageToUse);
       setImageUrl(url);
-      return () => URL.revokeObjectURL(url); // Cleanup blob URL when component unmounts or image changes
+      return () => URL.revokeObjectURL(url);
     } else {
       setImageUrl(getAzureStorageUrl(imageToUse));
     }
   }, [originalImage, gradImage]);
 
+  // const openModal = () => setIsModalOpen(true);
+
   return (
-    <div className="flex mx-auto justify-center w-96">
+    <div className="image-preview-container" /*onClick={openModal}*/>
       {imageUrl ? (
-        <Image
-          className="w-full h-full"
-          src={imageUrl}
-          alt="Preview"
-          height={224}
-          width={224}
-        />
+        <>
+          <Image src={imageUrl} alt="Preview" height={480} width={480} />
+          {/* <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <Image src={imageUrl} alt="Zoomed Preview" width={480} height={480} quality={100}  />
+          </Modal> */}
+        </>
       ) : (
         <ImageIcon size={48} className="mt-6" />
       )}
     </div>
   );
 };
+
 
 export default ImagePreview;
