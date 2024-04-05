@@ -4,19 +4,22 @@ import { ImageIcon } from "lucide-react";
 // import Modal from "@/components/ImageModal";
 
 interface ImagePreviewProps {
-  originalImage: File | string | undefined,
-  gradImage?: File | string | undefined,
+  originalImage: File | string | undefined;
+  gradImage?: File | string | undefined;
 }
 
 const getAzureStorageUrl = (fileName: string) => {
   const azureAccount = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT_NAME;
   const sasKey = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCESS_KEY;
   const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER_NAME;
-  const hostUrl = `http://127.0.0.1:10000/devstoreaccount1/xrays/${fileName}?${sasKey}`;
+  const hostUrl = `https://${azureAccount}.blob.core.windows.net/${containerName}/${fileName}?${sasKey}`;
   return hostUrl;
-}
+};
 
-const ImagePreview: React.FC<ImagePreviewProps> = ({ originalImage, gradImage }) => {
+const ImagePreview: React.FC<ImagePreviewProps> = ({
+  originalImage,
+  gradImage,
+}) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,7 +46,14 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ originalImage, gradImage })
     <div className="image-preview-container" /*onClick={openModal}*/>
       {imageUrl ? (
         <>
-          <Image src={imageUrl} alt="Preview" height={360} width={360} />
+          <Image
+            src={imageUrl}
+            alt="Preview"
+            height={360}
+            width={360}
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPElEQVR4nAXBMRUAQAQAUE+Ay2CyeCJIoIbZLI8akpnc/4CIqsrM7z2ICBExM3cHM6uqmSEi6O7dvbvM/DlOEjdqzoFrAAAAAElFTkSuQmCC"
+          />
           {/* <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <Image src={imageUrl} alt="Zoomed Preview" width={480} height={480} quality={100}  />
           </Modal> */}

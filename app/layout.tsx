@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mi4People - AI for Good",
+  title: "X-Ray Insight: AI-Powered Disease Probability Analysis",
   description: "Chest Xray diagnosis using torchxrayvision",
 };
 
