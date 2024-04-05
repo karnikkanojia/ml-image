@@ -14,7 +14,7 @@ export async function uploadImage(prevdata: any, data: FormData) {
                 const formData = new FormData();
                 formData.append("image", file);
                 const res = await axios.post(
-                    "http://localhost:7071/api/model_req" || azure_url,
+                    azure_url || "http://localhost:7071/api/model_req",
                     formData,
                     {
                         headers: {

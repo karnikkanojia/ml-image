@@ -17,13 +17,18 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-interface DataTableProps<TData, TValue> {
+
+interface WithGradcam {
+  gradcam: string;
+}
+
+interface DataTableProps<TData extends WithGradcam, TValue> {
   columns: ColumnDef<TData, TValue>[],
   data: TData[],
   setGradImage?: React.Dispatch<React.SetStateAction<any>>,
 }
 
-const DataTable = <TData, TValue>({
+const DataTable = <TData extends WithGradcam, TValue>({
   columns,
   data,
   setGradImage

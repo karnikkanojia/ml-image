@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { UploadIcon, Loader } from "lucide-react";
+import { UploadIcon, Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
 interface UploadFormProps {
@@ -14,7 +14,7 @@ const SubmitButton: React.FC = () => {
       {
         pending ? (
           <>
-            <Loader className="mr-2 animate-spin" size={14} />
+            <Loader2 className="mr-2 animate-spin" size={14} />
             Loading
           </>
         ) : (

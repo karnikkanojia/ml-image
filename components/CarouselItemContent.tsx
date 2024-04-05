@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import ImagePreview from "@/components/ImagePreview";
 import DataTable from '@/components/DataTable';
 import { CircleX } from "lucide-react";
-import { FormDataType, columns } from "@/lib/definitions";
+import { FormDataType, PredictionsDict, columns } from "@/lib/definitions";
 
 type CarouselItemContentProps = {
   item: FormDataType;
@@ -12,19 +12,22 @@ type CarouselItemContentProps = {
 
 const CarouselItemContent: React.FC<CarouselItemContentProps> = ({ item }) => {
   const [gradImage, setGradImage] = useState<string | undefined>(undefined);
-  const errorMessage: string | Error = item?.error;
+  const isDataUnavailable = item?.error || !item?.data?.predictions;
+  const errorMessage: string = item?.error?.toString() || "Data not available";
 
-  if(errorMessage) {
-    <CardContent className="flex flex-col lg:flex-row min-w-52">
-      <div className="text-center mt-6">
-          <CircleX color="red" className="inline mr-2" />
-          {errorMessage.toString()}
-        </div>
-    </CardContent>
+  if(isDataUnavailable) {
+    return(
+      <CardContent className="flex flex-col lg:flex-row min-w-52">
+        <div className="text-center mt-6">
+            <CircleX color="red" className="inline mr-2" />
+            {errorMessage.toString()}
+          </div>
+      </CardContent>
+    )
   }
 
-
-  const predictionArray = Object.entries(item?.data?.predictions).map(([pathology, { prediction, gradcam }]) => (
+  const predictions = item?.data?.predictions ?? {};
+  const predictionArray = Object.entries(predictions as PredictionsDict).map(([pathology, { prediction, gradcam }]) => (
     { pathology, prediction, gradcam }
   ));
   return (
