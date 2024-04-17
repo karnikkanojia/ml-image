@@ -9,9 +9,9 @@ interface ImagePreviewProps {
 }
 
 const getAzureStorageUrl = (fileName: string) => {
-  const azureAccount = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT_NAME;
-  const sasKey = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCESS_KEY;
-  const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER_NAME;
+  const azureAccount = process.env.NEXT_PUBLIC_STORAGE_ACCOUNT_NAME;
+  const sasKey = process.env.NEXT_PUBLIC_STORAGE_ACCESS_KEY;
+  const containerName = process.env.NEXT_PUBLIC_STORAGE_CONTAINER_NAME;
   const hostUrl = `https://${azureAccount}.blob.core.windows.net/${containerName}/${fileName}?${sasKey}`;
   return hostUrl;
 };
