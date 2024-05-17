@@ -8,7 +8,7 @@ export async function uploadImage(prevdata: any, data: FormData) {
         data: null
     }];
     const azure_url = process.env.FUNCTION_URL;
-    console.log("function url:", FUNCTION_URL);
+    console.log("function url:", azure_url);
     const result = await Promise.all(
         files.map(async (file) => {
             try{
