@@ -12,7 +12,18 @@ const getAzureStorageUrl = (fileName: string) => {
   const azureAccount = process.env.NEXT_PUBLIC_STORAGE_ACCOUNT_NAME;
   const sasKey = process.env.NEXT_PUBLIC_STORAGE_ACCESS_KEY;
   const containerName = process.env.NEXT_PUBLIC_STORAGE_CONTAINER_NAME;
+
+  console.log("Azure Account:", azureAccount);
+  console.log("Container Name:", containerName);
+  console.log("File Name:", fileName);
+
+  if (!azureAccount || !sasKey || !containerName || !fileName) {
+    console.error("Missing required environment variables or fileName");
+    return "";
+  }
+  
   const hostUrl = `https://${azureAccount}.blob.core.windows.net/${containerName}/${fileName}?${sasKey}`;
+  console.log("Generated URL:", hostUrl);
   return hostUrl;
 };
 
