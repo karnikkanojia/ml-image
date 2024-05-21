@@ -8,9 +8,9 @@ export async function GET(req: NextRequest) {
             statusText: "Bad Request",
         });
     }
-    const azureAccount = process.env.AZURE_STORAGE_ACCOUNT_NAME;
-    const sasKey = process.env.AZURE_STORAGE_ACCESS_KEY;
-    const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
+    const azureAccount = process.env.STORAGE_ACCOUNT_NAME;
+    const sasKey = process.env.STORAGE_ACCESS_KEY;
+    const containerName = process.env.STORAGE_CONTAINER_NAME;
     const hostUrl = `https://${azureAccount}.blob.core.windows.net/${containerName}/${fileName}?${sasKey}`;
     const response = await fetch(hostUrl);
     const blob = await response.blob();
