@@ -1,38 +1,17 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { ImageIcon } from "lucide-react";
-// import Modal from "@/components/ImageModal";
+import { useState, useEffect, Suspense } from "react";
+import { ImageIcon, Loader2Icon } from "lucide-react";
 
 interface ImagePreviewProps {
   originalImage: File | string | undefined;
   gradImage?: File | string | undefined;
 }
 
-const getAzureStorageUrl = (fileName: string) => {
-  const azureAccount = process.env.NEXT_PUBLIC_STORAGE_ACCOUNT_NAME;
-  const sasKey = process.env.NEXT_PUBLIC_STORAGE_ACCESS_KEY;
-  const containerName = process.env.NEXT_PUBLIC_STORAGE_CONTAINER_NAME;
-
-  console.log("Azure Account:", azureAccount);
-  console.log("Container Name:", containerName);
-  console.log("File Name:", fileName);
-
-  if (!azureAccount || !sasKey || !containerName || !fileName) {
-    console.error("Missing required environment variables or fileName");
-    return "";
-  }
-  
-  const hostUrl = `https://${azureAccount}.blob.core.windows.net/${containerName}/${fileName}?${sasKey}`;
-  console.log("Generated URL:", hostUrl);
-  return hostUrl;
-};
-
 const ImagePreview: React.FC<ImagePreviewProps> = ({
   originalImage,
   gradImage,
 }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
-  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const imageToUse = gradImage || originalImage;
@@ -47,14 +26,12 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
       setImageUrl(url);
       return () => URL.revokeObjectURL(url);
     } else {
-      setImageUrl(getAzureStorageUrl(imageToUse));
+      setImageUrl(`/image?fileName=${imageToUse}`);
     }
   }, [originalImage, gradImage]);
 
-  // const openModal = () => setIsModalOpen(true);
-
   return (
-    <div className="image-preview-container" /*onClick={openModal}*/>
+    <div className="image-preview-container">
       {imageUrl ? (
         <>
           <Image
@@ -65,9 +42,6 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPElEQVR4nAXBMRUAQAQAUE+Ay2CyeCJIoIbZLI8akpnc/4CIqsrM7z2ICBExM3cHM6uqmSEi6O7dvbvM/DlOEjdqzoFrAAAAAElFTkSuQmCC"
           />
-          {/* <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <Image src={imageUrl} alt="Zoomed Preview" width={480} height={480} quality={100}  />
-          </Modal> */}
         </>
       ) : (
         <ImageIcon size={48} className="mt-6" />

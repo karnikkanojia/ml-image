@@ -7,8 +7,7 @@ export async function uploadImage(prevdata: any, data: FormData) {
         error: "No files found",
         data: null
     }];
-    const azure_url = process.env.FUNCTION_URL;
-    console.log("function url:", azure_url);
+    const azure_url = process.env.AZURE_FUNCTION_URL;
     const result = await Promise.all(
         files.map(async (file) => {
             try{
@@ -19,7 +18,7 @@ export async function uploadImage(prevdata: any, data: FormData) {
                     formData,
                     {
                         headers: {
-                            "Authorization": `Bearer ${process.env.FUNCTION_KEY}`,
+                            "Authorization": `Bearer ${process.env.AZURE_FUNCTION_KEY}`,
                             "Content-Type": "multipart/form-data",
                         },
                     }
@@ -33,9 +32,9 @@ export async function uploadImage(prevdata: any, data: FormData) {
                     data: res.data
                 }
             }
-            catch(err) {
+            catch(err: AxiosError | any) {
                 return {
-                    error: `${err}`,
+                    error: `${err.message}`,
                     data: null
                 };
             }
