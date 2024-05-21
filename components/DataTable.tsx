@@ -55,7 +55,7 @@ const DataTable = <TData extends WithGradcam, TValue>({
   })
 
   return (
-    <div className="rounded-md border mt-4">
+    <div className="rounded-md border mt-4 min-w-96 max-h-fit">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

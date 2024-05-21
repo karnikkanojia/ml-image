@@ -17,10 +17,10 @@ const Predict = () => {
   return (
     <main className="w-2/3 mt-10 mx-auto">
       <UploadCard>
-        <Disclaimer />
         <UploadForm dispatch={dispatch} />
       </UploadCard>
       <PredCarousel response={state} />
+      <Disclaimer />
     </main>
   )
 }
