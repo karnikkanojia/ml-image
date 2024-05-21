@@ -35,9 +35,6 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           NODE_VERSION: 18.17.1
-          NEXT_PUBLIC_STORAGE_ACCESS_KEY: ${{ secrets.Azure.NEXT_PUBLIC_STORAGE_ACCESS_KEY }}
-          NEXT_PUBLIC_STORAGE_ACCOUNT_NAME: ${{ secrets.Azure.NEXT_PUBLIC_STORAGE_ACCOUNT_NAME }}
-          NEXT_PUBLIC_STORAGE_CONTAINER_NAME: ${{ secrets.Azure.NEXT_PUBLIC_STORAGE_CONTAINER_NAME }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
