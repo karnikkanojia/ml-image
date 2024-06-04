@@ -14,7 +14,7 @@ interface UploadCardProps {
 const UploadCard: React.FC<UploadCardProps> = ({ children }) => {
   
   return (
-    <Card className="max-w-max mx-auto">
+    <Card className="mx-auto max-w-md">
       <CardHeader>
         <CardTitle>Upload your files</CardTitle>
         <CardDescription>

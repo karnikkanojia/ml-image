@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ImageUpIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import {
   Carousel,
@@ -17,7 +16,7 @@ type PredCarouselProps = {
 };
 
 const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
-  const [gradImage, setGradImage] = useState<string | undefined>(undefined);
+
   if (!response || response.length === 0) {
     return (
       <Card className="mt-4">
