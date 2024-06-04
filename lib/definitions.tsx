@@ -1,21 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
-
-export type FormDataType =
-  | {
-      data: DiagnosisPredictions | any;
-      error: Error | any | null;
-    }
-  | undefined;
-
-export type Prediction = {
-  prediction: string;
-  gradcam: string;
-};
+import { z } from "zod";
 
 export type PredictionsDict = {
-  [disease: string]: Prediction;
+  [disease: string]: number;
+};
+
+export type CamDict = {
+  [method: string]: {
+    [disease: string]: string;
+  };
 };
 
 export type PredictionRow = {
@@ -26,8 +21,33 @@ export type PredictionRow = {
 
 export type DiagnosisPredictions = {
   predictions: PredictionsDict;
+  cam: CamDict;
   name: string;
 };
+
+export type FormDataType =
+  | {
+      data: DiagnosisPredictions | any;
+      error: Error | any | null;
+    }
+  | undefined;
+
+export const FormSchema = z.object({
+  files: z
+    .array(
+      z.instanceof(File).refine((file) => file.size < 5 * 1024 * 1024),
+      {
+        message: "File size must be less than 5MB",
+      }
+    )
+    .max(5, "Maximum of 5 files allowed.")
+    .min(1, "At least one file is required.")
+    .nullable(),
+  gradcamMethods: z
+    .array(z.string())
+    .min(1, "Select at least one Grad-CAM method."),
+  numberInput: z.string().min(1, "Number must be greater than 0."),
+});
 
 export const columns: ColumnDef<PredictionRow>[] = [
   {
@@ -46,9 +66,7 @@ export const columns: ColumnDef<PredictionRow>[] = [
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             className="p-2"
           >
-            <ArrowUpDown
-              className="ml-2 h-4 w-4 inline"
-            />
+            <ArrowUpDown className="ml-2 h-4 w-4 inline" />
           </Button>
         </span>
       );

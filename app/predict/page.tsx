@@ -3,8 +3,8 @@
 import { useFormState } from "react-dom";
 import UploadCard from "@/components/UploadCard";
 import Disclaimer from "@/components/Disclaimer";
-import UploadForm from "@/components/UploadForm";
 import PredCarousel from "@/components/PredCarousel";
+import UploadForm from "@/components/UploadForm";
 import { uploadImage } from "@/app/actions";
 import { FormDataType } from "@/lib/definitions";
 
@@ -15,7 +15,7 @@ const Predict = () => {
   const [ state, dispatch ] = useFormState(uploadImage, initialState);
 
   return (
-    <main className="w-2/3 mt-10 mx-auto">
+    <main className="w-2/3 mt-10 mx-auto space-y-4">
       <UploadCard>
         <UploadForm dispatch={dispatch} />
       </UploadCard>
