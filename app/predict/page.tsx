@@ -15,7 +15,7 @@ const Predict = () => {
   const [ state, dispatch ] = useFormState(uploadImage, initialState);
 
   return (
-    <main className="w-2/3 mt-10 mx-auto space-y-4">
+    <main className="md:w-2/3 mt-10 mx-auto space-y-4">
       <UploadCard>
         <UploadForm dispatch={dispatch} />
       </UploadCard>

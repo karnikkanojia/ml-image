@@ -115,4 +115,6 @@ const Welcome: React.FC = () => {
   );
 };
 
+Welcome.displayName = "Welcome"
+
 export default Welcome;
