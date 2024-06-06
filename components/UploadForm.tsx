@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { FormSchema } from "@/lib/definitions";
-import { useFormStatus } from "react-dom";
-import { useRef } from "react";
+import { FormSchema, FormDataType } from "@/lib/definitions";
+import { useRef, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -29,6 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { UploadIcon, Loader2, Paperclip } from "lucide-react";
 
+
 const gradcamOptions = [
   { value: "gradcam", label: "Grad-CAM" },
   { value: "gradcam++", label: "Grad-CAM++" },
@@ -39,15 +39,13 @@ const gradcamOptions = [
   { value: "smoothgradcam", label: "SmoothGrad-CAM++" },
 ];
 
-
-
 interface UploadFormProps {
   dispatch: (data: FormData) => void;
 }
 
 const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const formHook = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       gradcamMethods: [],
@@ -56,6 +54,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
     },
   });
 
+  const { isSubmitting } = formHook.formState;
+  const [isPending, startTransition] = useTransition();
+
   const dropzone = {
     multiple: true,
     maxFiles: 5,
@@ -63,22 +64,29 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
   };
 
   return (
-    <Form {...form}>
+    <Form {...formHook}>
       <form
         action={dispatch}
         ref={formRef}
-        onSubmit={form.handleSubmit((data) => {
-          const formData = new FormData();
-          data.files?.forEach((file) => formData.append("file", file));
-          formData.append("number", data.numberInput);
-          data.gradcamMethods?.forEach((method) =>
-            formData.append("methods", method)
-          );
-          dispatch(formData);
-        })}
+        onSubmit={(e) => {
+          e.preventDefault();
+          formHook.handleSubmit((data) => {
+            const formData = new FormData();
+            formData.append("number", data.numberInput);
+            data.gradcamMethods.map((method) =>
+              formData.append("methods", method)
+            );
+            data.files.map((file) => formData.append("file", file));
+            
+            startTransition(() => {
+              const resultPromise = dispatch(formData);
+              // setResponse(resultPromise);
+            });
+          })(e);
+        }}
       >
         <FormField
-          control={form.control}
+          control={formHook.control}
           name="gradcamMethods"
           render={({ field }) => (
             <FormItem>
@@ -108,7 +116,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
           )}
         />
         <FormField
-          control={form.control}
+          control={formHook.control}
           name="numberInput"
           render={({ field }) => (
             <FormItem>
@@ -124,7 +132,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
           )}
         />
         <FormField
-          control={form.control}
+          control={formHook.control}
           name="files"
           render={({ field }) => (
             <FormItem>
@@ -155,28 +163,25 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
             </FormItem>
           )}
         />
-        <SubmitButton />
+        <Button
+          type="submit"
+          className="mt-4 w-full"
+          aria-disabled={isSubmitting || isPending}
+        >
+          {isSubmitting || isPending ? (
+            <>
+              <Loader2 className="mr-2 animate-spin" size={14} />
+              Loading
+            </>
+          ) : (
+            <>
+              <UploadIcon className="mr-2" size={14} />
+              Upload
+            </>
+          )}
+        </Button>
       </form>
     </Form>
-  );
-};
-
-const SubmitButton: React.FC = () => {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" className="mt-4 w-full" aria-disabled={pending}>
-      {pending ? (
-        <>
-          <Loader2 className="mr-2 animate-spin" size={14} />
-          Loading
-        </>
-      ) : (
-        <>
-          <UploadIcon className="mr-2" size={14} />
-          Upload
-        </>
-      )}
-    </Button>
   );
 };
 

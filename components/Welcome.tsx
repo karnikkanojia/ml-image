@@ -3,7 +3,6 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
@@ -36,7 +35,6 @@ const Welcome: React.FC = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <CardDescription>
           Welcome to X-Ray Insight, an innovative tool designed to democratize
           access to advanced medical technologies through the power of
           artificial intelligence. This platform is a testament to
@@ -105,7 +103,6 @@ const Welcome: React.FC = () => {
                 responsibility and to the terms outlined above.
             </AlertDescription>
           </Alert>
-        </CardDescription>
       </CardContent>
       <CardFooter>
         <Link href="/predict">

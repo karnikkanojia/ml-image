@@ -14,14 +14,9 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+
   useEffect(() => {
     const imageToUse = gradImage || originalImage;
-
-    if (!imageToUse) {
-      setImageUrl(undefined);
-      return;
-    }
-
     setIsLoading(true);
 
     if (imageToUse instanceof File) {
