@@ -11,7 +11,7 @@ import { AlertCircle } from "lucide-react";
 
 const Disclaimer = () => {
   return (
-    <div className="z-50 absolute right-3 bottom-3">
+    <div className="fixed z-50 right-3 bottom-3">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="destructive">Disclaimer</Button>
