@@ -1,4 +1,4 @@
-import { ImageUpIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ImageUpIcon, ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -10,14 +10,35 @@ import { Card, CardContent } from "@/components/ui/card";
 import CarouselItemContent from "@/components/CarouselItemContent";
 import { Button } from "@/components/ui/button";
 import { FormDataType } from "@/lib/definitions";
+import { Suspense } from "react";
 
 type PredCarouselProps = {
-  response: FormDataType[];
+  response: Promise<FormDataType[]> | FormDataType[];
 };
 
 const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
+  if (response instanceof Promise) {
+    return (
+      <Suspense
+        fallback={
+          <Card className="mt-4">
+            <CardContent className="flex flex-col sm:flex-row justify-around items-center">
+              <Loader2Icon size={48} className="mt-4 animate-spin" />
+              <p className="mt-4">Loading results...</p>
+            </CardContent>
+          </Card>
+        }
+      >
+        <ResolvedPredCarousel response={response} />
+      </Suspense>
+    );
+  }
 
-  if (!response || response.length === 0) {
+  return <ResolvedPredCarousel response={response} />;
+};
+
+const ResolvedPredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
+  if (!response || (Array.isArray(response) && response.length === 0)) {
     return (
       <Card className="mt-4">
         <CardContent className="flex flex-col sm:flex-row justify-around items-center">
@@ -36,7 +57,7 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
         </Button>
       </CarouselPrevious>
       <CarouselContent className="flex flex-row">
-        {response.map((item, index) => {
+        {response instanceof Array && response.map((item: FormDataType, index: number) => {
           return (
             <CarouselItem key={item?.data?.name || index}>
               <Card className="flex justify-around">

@@ -13,7 +13,7 @@ export async function uploadImage(prevdata: any, data: FormData) {
       },
     ];
   const azure_url = process.env.FUNCTION_URL;
-  const result = await Promise.all(
+  const result = Promise.all(
     files.map(async (file) => {
       try {
         const formData = new FormData();
