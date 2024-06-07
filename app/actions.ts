@@ -25,7 +25,7 @@ export async function uploadImage(prevdata: any, data: FormData) {
           formData,
           {
             headers: {
-              "Authorization": `Bearer ${process.env.FUNCTION_KEY}`,
+              "x-functions-key": process.env.FUNCTION_KEY,
               "Content-Type": "multipart/form-data",
             },
           }
