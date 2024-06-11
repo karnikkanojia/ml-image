@@ -11,12 +11,14 @@ import CarouselItemContent from "@/components/CarouselItemContent";
 import { Button } from "@/components/ui/button";
 import { FormDataType } from "@/lib/definitions";
 import { Suspense } from "react";
+import { useOnborda } from "onborda";
 
 type PredCarouselProps = {
   response: Promise<FormDataType[]> | FormDataType[];
 };
 
 const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
+
   if (response instanceof Promise) {
     return (
       <Suspense
@@ -38,9 +40,22 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
 };
 
 const ResolvedPredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
+
+  const { isOnbordaVisible } = useOnborda();
+
+  if (isOnbordaVisible) {
+    return (
+      <Card className="mt-4" id="pred-carousel">
+        <CardContent className="flex flex-col sm:flex-row justify-around items-center">
+          <CarouselItemContent item={{data: {}, error: null}} demo={isOnbordaVisible} />
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (!response || (Array.isArray(response) && response.length === 0)) {
     return (
-      <Card className="mt-4">
+      <Card className="mt-4" id="pred-carousel">
         <CardContent className="flex flex-col sm:flex-row justify-around items-center">
           <ImageUpIcon size={48} className="mt-4" />
           <p className="mt-4">Upload Image from above to see results.</p>
