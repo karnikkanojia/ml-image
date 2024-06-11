@@ -12,7 +12,7 @@ export const OnbordaSteps: Step[] = [
       </>
     ),
     selector: "#upload-form",
-    side: "right",
+    side: "bottom",
     showControls: true,
     pointerPadding: 1,
   },
