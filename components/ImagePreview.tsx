@@ -14,9 +14,9 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-
   useEffect(() => {
     const imageToUse = gradImage || originalImage;
+    if (!imageToUse) return;
     setIsLoading(true);
 
     if (imageToUse instanceof File) {
@@ -50,7 +50,14 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
           onLoad={handleImageLoad}
         />
       ) : (
-        !isLoading && <ImageIcon size={48} className="mt-6" />
+        !isLoading && (
+          <Image
+            src={"/demo_chest.png"}
+            alt="Placeholder Image"
+            width={360}
+            height={360}
+          />
+        )
       )}
     </div>
   );
