@@ -11,7 +11,6 @@ export default function RootLayout({
     <OnbordaProvider>
       <Onborda
         steps={OnbordaSteps}
-        showOnborda={true}
         shadowOpacity="0.8"
         cardComponent={OnbordaOverlay}
       >
