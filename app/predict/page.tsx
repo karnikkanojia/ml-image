@@ -1,36 +1,46 @@
-"use client"
+"use client";
 
-import { useFormState } from "react-dom";
-import UploadCard from "@/components/UploadCard";
-import Disclaimer from "@/components/Disclaimer";
-import PredCarousel from "@/components/PredCarousel";
 import UploadForm from "@/components/UploadForm";
+import PredCarousel from "@/components/PredCarousel";
+import { useFormState } from "react-dom";
 import { uploadImage } from "@/app/actions";
-import { FormDataType } from "@/lib/definitions";
+import { FormSchema } from "@/lib/definitions";
+import { z } from "zod";
+import { Onborda, useOnborda } from "onborda";
 import { useEffect } from "react";
-import { useOnborda } from "onborda";
+import { steps } from "@/lib/onborda-steps";
+import OnbordaCard from "@/components/OnbordaCard";
+import { useWindowWidth } from "@react-hook/window-size";
 
-const initialState: FormDataType[] = [];
+type FormDataType = z.infer<typeof FormSchema>;
 
-const Predict = () => {
-
-  const [ state, dispatch ] = useFormState(uploadImage, initialState);
+export default function Analyse() {
+  const initialState: FormDataType[] = [];
+  const [state, dispatch] = useFormState(uploadImage, initialState);
   const { startOnborda } = useOnborda();
+  const windowWidth = useWindowWidth();
+
+  useEffect(() => startOnborda(), []);
 
   useEffect(() => {
-    startOnborda();
-  }, []);
+    if (windowWidth < 768) {
+      steps[0].side = "bottom";
+      steps[1].side = "top";
+    } else {
+      steps[0].side = "right";
+      steps[1].side = "left";
+    }
+  }, [windowWidth]);
 
 
   return (
-    <main className="relative md:w-2/3 my-4 mx-auto space-y-4">
-      <UploadCard>
+    <Onborda steps={steps} cardComponent={OnbordaCard} shadowOpacity="0.8">
+      <div className="grid grid-cols-1 md:grid-cols-[400px_1fr] h-full">
         <UploadForm dispatch={dispatch} />
-      </UploadCard>
-      <PredCarousel response={state} />
-      <Disclaimer />
-    </main>
-  )
+        <div className="my-auto">
+          <PredCarousel response={state} />
+        </div>
+      </div>
+    </Onborda>
+  );
 }
-
-export default Predict;

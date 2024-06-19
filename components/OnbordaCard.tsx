@@ -3,8 +3,6 @@ import React from "react";
 import type { CardComponentProps } from "onborda";
 import { useOnborda } from "onborda";
 import { XIcon } from "lucide-react";
-
-// Shadcn
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const OnbordaOverlay: React.FC<CardComponentProps> = ({
+const OnbordaCard: React.FC<CardComponentProps> = ({
   step,
   currentStep,
   totalSteps,
@@ -55,7 +53,7 @@ const OnbordaOverlay: React.FC<CardComponentProps> = ({
             </Button>
           )}
           {currentStep + 1 === totalSteps && (
-            <Button className="ml-auto" onClick={() => closeOnborda()}>
+            <Button onClick={() => closeOnborda()} className="ml-auto">
               🎉 Finish!
             </Button>
           )}
@@ -66,4 +64,4 @@ const OnbordaOverlay: React.FC<CardComponentProps> = ({
   );
 };
 
-export default OnbordaOverlay;
+export default OnbordaCard;

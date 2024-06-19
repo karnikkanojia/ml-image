@@ -1,6 +1,7 @@
-import { Step } from "onborda/src/types";
+import { Step } from "onborda";
 
-export const OnbordaSteps: Step[] = [
+
+export const steps: Step[] = [
   {
     icon: <>👋</>,
     title: "Step 1",
@@ -12,12 +13,13 @@ export const OnbordaSteps: Step[] = [
       </>
     ),
     selector: "#upload-form",
-    side: "bottom",
+    side: "right",
     showControls: true,
-    pointerPadding: 1,
+    pointerPadding: 0,
+    pointerRadius: 0,
   },
   {
-    icon: <>👋</>,
+    icon: <>📁</>,
     title: "Step 2",
     content: (
       <>
@@ -30,11 +32,13 @@ export const OnbordaSteps: Step[] = [
       </>
     ),
     selector: "#pred-carousel",
-    side: "top",
+    side: "left",
     showControls: true,
+    pointerPadding: 0,
+    pointerRadius: 0,
   },
   {
-    icon: <>👋</>,
+    icon: <>🎉</>,
     title: "Step 3",
     content: (
       <>
@@ -45,5 +49,7 @@ export const OnbordaSteps: Step[] = [
     selector: "#show-original-btn",
     side: "top",
     showControls: true,
+    pointerPadding: 0,
+    pointerRadius: 0,
   },
 ];
