@@ -4,18 +4,20 @@ import UploadForm from "@/components/UploadForm";
 import PredCarousel from "@/components/PredCarousel";
 import { useFormState } from "react-dom";
 import { uploadImage } from "@/app/actions";
-import { FormSchema } from "@/lib/definitions";
-import { z } from "zod";
 import { Onborda, useOnborda } from "onborda";
 import { useEffect } from "react";
 import { steps } from "@/lib/onborda-steps";
 import OnbordaCard from "@/components/OnbordaCard";
 import { useWindowWidth } from "@react-hook/window-size";
+import { FormDataType } from "@/lib/definitions";
 
-type FormDataType = z.infer<typeof FormSchema>;
+
 
 export default function Analyse() {
-  const initialState: FormDataType[] = [];
+  const initialState: FormDataType[] = [{
+    data: undefined,
+    error: undefined,
+  }];
   const [state, dispatch] = useFormState(uploadImage, initialState);
   const { startOnborda } = useOnborda();
   const windowWidth = useWindowWidth();
@@ -31,7 +33,6 @@ export default function Analyse() {
       steps[1].side = "left";
     }
   }, [windowWidth]);
-
 
   return (
     <Onborda steps={steps} cardComponent={OnbordaCard} shadowOpacity="0.8">

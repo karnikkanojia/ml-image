@@ -1,8 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
+
+
+export type PredictionsDict = {
+  [disease: string]: number;
+};
+
+export type CamDict = {
+  [method: string]: {
+    [disease: string]: string;
+  };
+};
+
+export type PredictionRow = {
+  pathology: string;
+  prediction: string;
+  gradcam: string;
+};
+
+
+export type DiagnosisPredictions = {
+  predictions: PredictionsDict;
+  cam: CamDict;
+  name: string;
+};
+
+export type FormDataType =
+  | {
+      data: DiagnosisPredictions | any;
+      error: Error | any | null;
+    }
+  | undefined;
+
 
 export const PredictionRowSchema = z.object({
   pathology: z.string(),
@@ -33,34 +64,3 @@ export const FormSchema = zfd.formData({
     .min(1, "Select at least one Grad-CAM method."),
   numberInput: z.string().min(1, "Number must be greater than 0."),
 });
-
-export const columns: ColumnDef<z.infer<typeof PredictionRowSchema>>[] = [
-  {
-    accessorKey: "pathology",
-    header: "Pathology",
-    accessorFn: (row) => row.pathology,
-  },
-  {
-    accessorKey: "prediction",
-    header: ({ column }) => {
-      return (
-        <span>
-          Prediction
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="p-2"
-          >
-            <ArrowUpDown size={12} className="mx-auto inline" />
-          </Button>
-        </span>
-      );
-    },
-    accessorFn: (row) => row.prediction,
-  },
-  {
-    accessorKey: "gradcam",
-    header: "Gradcam",
-    accessorFn: (row) => row.gradcam,
-  },
-];

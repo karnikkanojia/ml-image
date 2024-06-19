@@ -1,4 +1,6 @@
-import { ImageUpIcon } from "lucide-react";
+import {
+  ImageUpIcon,
+} from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -7,12 +9,12 @@ import {
   CarouselPreviousCustom as CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card } from "@/components/ui/card";
-import CarouselItemContent from "@/components/CarouselItemContent";
-import { FormDataType } from "@/lib/definitions";
+import CarouselItemContent from "@/components/CarouselItemContent"
 import { useOnborda } from "onborda";
+import { FormDataType } from "@/lib/definitions";
 
 type PredCarouselProps = {
-  response: Promise<FormDataType[]> | FormDataType[];
+  response: FormDataType[];
 };
 
 const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
@@ -32,7 +34,7 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
     );
   }
 
-  if (!response || (Array.isArray(response) && response.length === 0)) {
+  if (!response || (response.length == 1 && !response[0]?.data && !response[0]?.error)) {
     return (
       <div className="grid place-items-center">
         <ImageUpIcon size={48} className="mt-4" />
@@ -55,10 +57,10 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
           })}
       </CarouselContent>
       <div className="grid grid-cols-[1fr_1fr] mt-4 gap-x-4 max-w-full">
-        <CarouselPrevious variant="secondary" className="" size="lg">
+        <CarouselPrevious variant="secondary" size="lg">
           Previous
         </CarouselPrevious>
-        <CarouselNext variant="secondary" className="" size="lg">
+        <CarouselNext variant="secondary" size="lg">
           Next
         </CarouselNext>
       </div>

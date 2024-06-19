@@ -2,9 +2,9 @@ import { useState } from "react";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import ImagePreview from "@/components/ImagePreview";
-import DataTable from "@/components/DataTable";
+import { PredTable } from "@/components/PredTable";
 import { CircleX } from "lucide-react";
-import { FormDataType, columns } from "@/lib/definitions";
+import { FormDataType } from "@/lib/definitions";
 import {
   Select,
   SelectContent,
@@ -59,10 +59,9 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
           <Button id="show-original-btn">Show Original</Button>
         </CardHeader>
         <div className="lg:mt-4">
-          <DataTable
+          <PredTable
             data={predictionArray}
             setGradImage={setGradImage}
-            columns={columns}
           />
         </div>
       </CardContent>
@@ -116,11 +115,9 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
             ))}
           </SelectContent>
         </Select>
-
-        <DataTable
+        <PredTable
           data={predictionArray}
           setGradImage={setGradImage}
-          columns={columns}
         />
       </div>
     </CardContent>
