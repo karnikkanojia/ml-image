@@ -51,14 +51,14 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
     ];
 
     return (
-      <CardContent className="flex flex-col lg:flex-row min-w-52">
-        <CardHeader className="flex justify-evenly">
+      <CardContent className="flex flex-col lg:flex-row">
+        <CardHeader className="flex justify-evenly max-w-fit mx-auto lg:m-0">
           <ImagePreview
-            originalImage={undefined}
+            demo={true} originalImage={undefined}
           />
           <Button id="show-original-btn">Show Original</Button>
         </CardHeader>
-        <div className="md:mt-4">
+        <div className="lg:mt-4">
           <DataTable
             data={predictionArray}
             setGradImage={setGradImage}
@@ -71,12 +71,14 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
 
   if (isDataUnavailable) {
     return (
-      <CardContent className="flex flex-col lg:flex-row min-w-52">
-        <div className="text-center mt-6">
-          <CircleX color="red" className="inline mr-2" />
-          {errorMessage.toString()}
-        </div>
-      </CardContent>
+      <div className="mx-auto">
+        <CardContent className="flex flex-col lg:flex-row justify-center">
+          <div className="text-center mt-6">
+            <CircleX color="red" className="inline mr-2" />
+            {errorMessage.toString()}
+          </div>
+        </CardContent>
+      </div>
     );
   }
 
@@ -89,19 +91,19 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
       const gradcam = item?.data?.cam[method]?.[pathology];
       return {
         pathology,
-        prediction: prediction.toFixed(10),
+        prediction: prediction.toFixed(4),
         gradcam,
       };
     }
   );
 
   return (
-    <CardContent className="flex flex-col lg:flex-row min-w-52">
-      <CardHeader className="flex justify-evenly">
+    <CardContent className="flex flex-col lg:flex-row">
+      <CardHeader className="flex justify-evenly max-w-fit mx-auto lg:m-0">
         <ImagePreview originalImage={item?.data?.name} gradImage={gradImage} />
         <Button onClick={() => setGradImage(undefined)}>Show Original</Button>
       </CardHeader>
-      <div className="md:mt-4">
+      <div className="lg:mt-4">
         <Select value={method} onValueChange={setMethod}>
           <SelectTrigger className="w-[180px]">
             <SelectValue>{method}</SelectValue>

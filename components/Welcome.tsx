@@ -22,7 +22,7 @@ const Welcome: React.FC = () => {
         <Link href="https://www.mi4people.org" target="_blank">
           <span className="flex justify-center mb-4">
             <Image
-              src="/mi4people.png"
+              src="/mi4people.webp"
               alt="MI4People Logo"
               width={100}
               height={100}

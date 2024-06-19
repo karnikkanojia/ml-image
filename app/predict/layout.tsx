@@ -1,21 +1,14 @@
-import { OnbordaProvider, Onborda } from "onborda";
-import { OnbordaSteps } from "@/lib/onborda/steps";
-import OnbordaOverlay from "@/components/OnbordaOverlay";
+import { OnbordaProvider } from "onborda";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <OnbordaProvider>
-      <Onborda
-        steps={OnbordaSteps}
-        shadowOpacity="0.8"
-        cardComponent={OnbordaOverlay}
-      >
-        {children}
-      </Onborda>
+      {children}
     </OnbordaProvider>
   );
 }
