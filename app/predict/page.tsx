@@ -10,6 +10,7 @@ import { steps } from "@/lib/onborda-steps";
 import OnbordaCard from "@/components/OnbordaCard";
 import { useWindowWidth } from "@react-hook/window-size";
 import { FormDataType } from "@/lib/definitions";
+import Disclaimer from "@/components/Disclaimer";
 
 
 
@@ -42,6 +43,7 @@ export default function Analyse() {
           <PredCarousel response={state} />
         </div>
       </div>
+      <Disclaimer />
     </Onborda>
   );
 }
