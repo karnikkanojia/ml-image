@@ -31,7 +31,7 @@ export const uploadImage = async (
           }
         );
         if (res.statusText !== "OK") {
-          throw new AxiosError("Request failed");
+          throw new AxiosError(`Error ${res.status}: Request Failed`);
         }
         return {
           data: res.data,
@@ -45,6 +45,5 @@ export const uploadImage = async (
       }
     })
   );
-
   return result;
 };

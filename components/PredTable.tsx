@@ -21,7 +21,7 @@ export const PredTable: React.FC<PredTableProps> = ({
   setGradImage,
 }) => {
   return (
-    <div className="rounded-md border mt-4 min-w-56 max-h-fit">
+    <div className="rounded-md border mt-4 min-w-56 max-h-fit max-w-fit">
       <Table>
         <TableHeader>
           <TableRow>

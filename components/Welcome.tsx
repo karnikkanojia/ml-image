@@ -27,6 +27,7 @@ const Welcome: React.FC = () => {
               width={100}
               height={100}
               className="text-center"
+              loading="eager"
             />
           </span>
         </Link>

@@ -43,6 +43,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
           alt="Preview"
           height={360}
           width={360}
+          loading="eager"
         />
       </div>
     );

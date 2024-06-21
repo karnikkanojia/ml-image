@@ -51,7 +51,7 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
     ];
 
     return (
-      <CardContent className="flex flex-col lg:flex-row">
+      <CardContent className="flex flex-col lg:flex-row w-fit">
         <CardHeader className="flex justify-evenly max-w-fit mx-auto lg:m-0">
           <ImagePreview
             demo={true} originalImage={undefined}
@@ -90,7 +90,7 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
       const gradcam = item?.data?.cam[method]?.[pathology];
       return {
         pathology,
-        prediction: prediction.toFixed(4),
+        prediction: prediction.toFixed(8),
         gradcam,
       };
     }
@@ -102,7 +102,7 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
         <ImagePreview originalImage={item?.data?.name} gradImage={gradImage} />
         <Button onClick={() => setGradImage(undefined)}>Show Original</Button>
       </CardHeader>
-      <div className="lg:mt-4">
+      <div className="lg:mt-6 mx-auto lg:mx-0">
         <Select value={method} onValueChange={setMethod}>
           <SelectTrigger className="w-[180px]">
             <SelectValue>{method}</SelectValue>

@@ -34,7 +34,7 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
     );
   }
 
-  if (!response || (response.length == 1 && !response[0]?.data && !response[0]?.error)) {
+  if (!response || (!response[0]?.data && !response[0]?.error)) {
     return (
       <div className="grid place-items-center">
         <ImageUpIcon size={48} className="mt-4" />
@@ -43,20 +43,20 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
     );
   }
   return (
-    <Carousel className="w-10/12 mx-auto min-w-fit">
+    <Carousel className="w-8/12 lg:ml-8 mx-auto md:mx-0">
       <CarouselContent className="flex flex-row">
         {response instanceof Array &&
           response.map((item: FormDataType, index: number) => {
             return (
-              <CarouselItem key={item?.data?.name || index}>
-                <Card className="w-full">
+              <CarouselItem key={item?.data?.name || index} className="overflow-auto">
+                <Card>
                   <CarouselItemContent item={item} />
                 </Card>
               </CarouselItem>
             );
           })}
       </CarouselContent>
-      <div className="grid grid-cols-[1fr_1fr] mt-4 gap-x-4 max-w-full">
+      <div className="grid grid-cols-[1fr_1fr] mt-4 gap-x-4">
         <CarouselPrevious variant="secondary" size="lg">
           Previous
         </CarouselPrevious>
