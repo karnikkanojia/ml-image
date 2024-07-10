@@ -44,6 +44,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
           height={360}
           width={360}
           loading="eager"
+          quality={30}
         />
       </div>
     );

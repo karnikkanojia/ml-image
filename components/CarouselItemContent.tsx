@@ -51,14 +51,14 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
     ];
 
     return (
-      <CardContent className="flex flex-col lg:flex-row w-fit">
+      <CardContent className="flex flex-col lg:flex-row">
         <CardHeader className="flex justify-evenly max-w-fit mx-auto lg:m-0">
           <ImagePreview
             demo={true} originalImage={undefined}
           />
           <Button id="show-original-btn">Show Original</Button>
         </CardHeader>
-        <div className="lg:mt-4">
+        <div className="lg:mt-4 lg:mx-0 mx-auto">
           <PredTable
             data={predictionArray}
             setGradImage={setGradImage}
@@ -98,7 +98,7 @@ const CarouselItemContent: React.FC<CarouselItemContentProps> = ({
 
   return (
     <CardContent className="flex flex-col lg:flex-row">
-      <CardHeader className="flex justify-evenly max-w-fit mx-auto lg:m-0">
+      <CardHeader className="flex justify-evenly mx-auto lg:m-0">
         <ImagePreview originalImage={item?.data?.name} gradImage={gradImage} />
         <Button onClick={() => setGradImage(undefined)}>Show Original</Button>
       </CardHeader>
