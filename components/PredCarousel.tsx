@@ -43,7 +43,7 @@ const PredCarousel: React.FC<PredCarouselProps> = ({ response }) => {
     );
   }
   return (
-    <Carousel className="w-8/12 lg:ml-8 mx-auto md:mx-0">
+    <Carousel className="w-9/12 lg:ml-8 mx-auto md:mx-0">
       <CarouselContent className="flex flex-row">
         {response instanceof Array &&
           response.map((item: FormDataType, index: number) => {
