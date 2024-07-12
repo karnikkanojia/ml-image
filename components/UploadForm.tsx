@@ -32,7 +32,6 @@ const gradcamOptions = [
   { value: "gradcam", label: "Grad-CAM" },
   { value: "gradcampp", label: "Grad-CAM++" },
   { value: "scorecam", label: "Score-CAM" },
-  { value: "isc", label: "ISCAM" },
   { value: "xgradcam", label: "XGrad-CAM" },
   { value: "layercam", label: "Layer-CAM" },
   { value: "smoothgradcam", label: "SmoothGrad-CAM++" },
