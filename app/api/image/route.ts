@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
     if (!fileName) {
         return new NextResponse(null, {
             status: 400,
-            statusText: "Bad Request",
+            statusText: "FileName parameter is required.",
         });
     }
     const azureAccount = process.env.STORAGE_ACCOUNT_NAME;
