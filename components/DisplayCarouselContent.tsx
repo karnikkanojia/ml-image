@@ -87,8 +87,8 @@ const DisplayCarouselContent = ({ state }: { state: DataState }) => {
             dispatch({
               type: DataStateActions.DELETE_DATA,
               payload: {
-                file: data.file,
                 camMethods: data.camMethods,
+                name: data.name,
               }
             })}
           }

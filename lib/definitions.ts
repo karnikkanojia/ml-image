@@ -24,8 +24,8 @@ const ResponseSchema = z.object({
 });
 
 const CacheKeySchema = z.object({
-  file: z.instanceof(File),
   camMethods: z.array(z.string()),
+  name: z.string(),
 });
 
 const DataStateSchema = z.object({

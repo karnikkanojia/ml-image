@@ -29,7 +29,7 @@ export const DataReducer = (
 
     case DataStateActions.DELETE_DATA:
       const methodsKey = action.payload.camMethods.join('-');
-      const cacheKey = `${action.payload.file.name}-${methodsKey}`;
+      const cacheKey = `${action.payload.name}-${methodsKey}`;
 
       try {
         localStorage.removeItem(cacheKey);
@@ -38,7 +38,8 @@ export const DataReducer = (
       }
 
       console.log(`Deleted from state with key: ${cacheKey}`);
-      return state.filter((data) => data.name !== action.payload.file.name);
+      console.log((action.payload));
+      return state.filter((data) => data.name !== String(action.payload.name));
 
     default:
       return state;
