@@ -13,7 +13,7 @@ const Page = () => {
     <DataProvider>
         <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr]">
           <UploadForm />
-          <section className="grid place-items-center p-6">
+          <section className="md:grid md:place-items-center p-6">
             <DisplayPanel />
           </section>
         </div>
