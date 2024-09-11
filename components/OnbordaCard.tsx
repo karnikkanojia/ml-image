@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useEffect } from "react";
 import type { CardComponentProps } from "onborda";
 import { useOnborda } from "onborda";
 import { XIcon } from "lucide-react";
@@ -22,7 +22,8 @@ const OnbordaCard: React.FC<CardComponentProps> = ({
   arrow,
 }) => {
   // Onborda hooks
-  const { closeOnborda } = useOnborda();
+  const { closeOnborda, startOnborda } = useOnborda();
+  useEffect(() => startOnborda("X-Ray Insight"), []);
 
   return (
     <Card className="border-0 rounded-3xl max-w-vw">

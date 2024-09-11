@@ -1,7 +1,6 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { FormSchema } from "@/lib/definitions";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,8 +24,9 @@ import {
   FileInput,
 } from "@/components/ui/file-uploader";
 import { Input } from "@/components/ui/input";
-import { UploadIcon, Loader2, Paperclip } from "lucide-react";
-import { useRef, useTransition } from "react";
+import { UploadIcon, Paperclip } from "lucide-react";
+import { FormValues, FormSchema, DataState } from "@/lib/definitions";
+import { DataContext, DataStateActions } from "@/context/data-provider";
 
 const gradcamOptions = [
   { value: "gradcam", label: "Grad-CAM" },
@@ -35,19 +35,14 @@ const gradcamOptions = [
   { value: "layercam", label: "Layer-CAM" },
 ];
 
-interface UploadFormProps {
-  dispatch: (data: FormData) => void;
-}
+const UploadForm = () => {
 
-const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const [pending, startTransition] = useTransition();
-  const formHook = useForm<z.infer<typeof FormSchema>>({
+  const formHook = useForm<FormValues>({
     mode: "onBlur",
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      gradcamMethods: [],
-      numberInput: "5",
+      cam: [],
+      topk: "5",
       files: [],
     },
   });
@@ -58,9 +53,12 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
     maxSize: 5 * 1024 * 1024,
   };
 
+  const { dispatch } = useContext(DataContext);
+
+
   return (
-    <div
-      className="bg-white dark:bg-gray-950 rounded-lg shadow-sm overflow-hidden md:h-screen md:w-96"
+    <aside
+      className="bg-white dark:bg-gray-950 rounded-lg shadow-sm overflow-hidden lg:h-screen lg:w-96"
       id="upload-form"
     >
       <div className="p-6">
@@ -73,25 +71,33 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
           </p>
           <Form {...formHook}>
             <form
-              ref={formRef}
               onSubmit={(e) => {
                 e.preventDefault();
                 formHook.handleSubmit((data) => {
-                  const formData = new FormData();
-                  formData.append("number", data.numberInput);
-                  data.gradcamMethods.map((method) =>
-                    formData.append("methods", method)
-                  );
-                  data.files.map((file) => formData.append("file", file));
-                  startTransition(() => {
-                    dispatch(formData);
-                  });
+                  let dataArr = data.files.map((file) => (
+                    {
+                      file: file,
+                      topk: parseInt(data.topk),
+                      camMethods: data.cam,
+                      predictions: {},
+                      name: file.name,
+                      fetched: false,
+                      data: {},
+                    } as DataState
+                  ));
+                  for (const data of dataArr) {
+                    dispatch({
+                      type: DataStateActions.ADD_DATA,
+                      payload: data,
+                      name: data.name,
+                    });
+                  }
                 })(e);
               }}
             >
               <FormField
                 control={formHook.control}
-                name="gradcamMethods"
+                name="cam"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Method</FormLabel>
@@ -121,7 +127,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
               />
               <FormField
                 control={formHook.control}
-                name="numberInput"
+                name="topk"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Number</FormLabel>
@@ -167,28 +173,15 @@ const UploadForm: React.FC<UploadFormProps> = ({ dispatch }) => {
                   </FormItem>
                 )}
               />
-              <Button
-                type="submit"
-                className="mt-4 w-full"
-                aria-disabled={pending}
-              >
-                {pending ? (
-                  <>
-                    <Loader2 className="mr-2 animate-spin" size={14} />
-                    Loading
-                  </>
-                ) : (
-                  <>
-                    <UploadIcon className="mr-2" size={14} />
-                    Upload
-                  </>
-                )}
+              <Button type="submit" className="mt-4 w-full">
+                <UploadIcon className="mr-2" size={14} />
+                Upload
               </Button>
             </form>
           </Form>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 
