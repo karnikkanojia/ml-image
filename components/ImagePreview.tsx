@@ -11,7 +11,7 @@ const ImagePreview: React.FC<{ url: string }> = ({ url }) => {
     }
     
     if (imageRef.current) {
-      imageRef.current.src = `/image?fileName=${url}`;
+      imageRef.current.src = `/api/image?fileName=${url}`;
     }
   }, [url]);
 

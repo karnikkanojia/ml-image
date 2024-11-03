@@ -38,7 +38,6 @@ export const DataReducer = (
       }
 
       console.log(`Deleted from state with key: ${cacheKey}`);
-      console.log((action.payload));
       return state.filter((data) => data.name !== String(action.payload.name));
 
     default:

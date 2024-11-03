@@ -33,7 +33,7 @@ const DisplayCarouselContent = ({ state }: { state: DataState }) => {
         response = await fetchData(state);
       }
       if (response.hasOwnProperty("error") && response.error) {
-        showBoundary({ message: response.error, state });
+        showBoundary(response.error);
         return;
       }
       setCamImageUrl(response.name || "/chest_placeholder.jpeg");

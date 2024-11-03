@@ -1,13 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { RotateCw } from "lucide-react";
+import { FallbackProps } from "react-error-boundary";
 
-interface CarouselErrorProps {
-  errorObj?: any;
-  resetErrorBoundary: () => void;
-}
 
-const CarouselError: React.FC<CarouselErrorProps> = ({
-  errorObj,
+const CarouselError: React.FC<FallbackProps> = ({
+  error,
   resetErrorBoundary,
 }) => {
   return (
@@ -17,11 +14,11 @@ const CarouselError: React.FC<CarouselErrorProps> = ({
           Filename
         </h1>
         <p className="text-lg text-muted-foreground inline-block">
-          {errorObj?.state?.name}
+          {error?.state?.name}
         </p>
       </span>
       <p>Something went wrong:</p>
-      <pre>{errorObj?.message}</pre>
+      <pre>{error?.message}</pre>
       <Button
         variant="secondary"
         size="sm"
