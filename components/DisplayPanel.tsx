@@ -9,12 +9,21 @@ import {
 import DisplayCarouselContent from "@/components/DisplayCarouselContent";
 import CarouselError from "@/components/CarouselError";
 import { DataContext } from "@/context/data-provider";
+import CarouselDemo from "@/components/CarouselDemo";
 import { DataState } from "@/lib/definitions";
 import { ImageUpIcon } from "lucide-react";
 import { useContext } from "react";
+import { useOnborda } from "onborda";
 
 const DisplayPanel = () => {
   const { state } = useContext(DataContext);
+  const { isOnbordaVisible } = useOnborda();
+
+  if (isOnbordaVisible) {
+    return (
+      <CarouselDemo />
+    )
+  }
 
   if (state.length === 0) {
     return (

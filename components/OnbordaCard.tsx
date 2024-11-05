@@ -21,12 +21,10 @@ const OnbordaCard: React.FC<CardComponentProps> = ({
   prevStep,
   arrow,
 }) => {
-  // Onborda hooks
-  const { closeOnborda, startOnborda } = useOnborda();
-  useEffect(() => startOnborda("X-Ray Insight"), []);
 
+  const { closeOnborda, startOnborda } = useOnborda();
   return (
-    <Card className="border-0 rounded-3xl max-w-vw">
+    <Card className="border-0 rounded-3xl max-w-vw min-w-96">
       <CardHeader>
         <div className="flex items-start justify-between w-full">
           <div>

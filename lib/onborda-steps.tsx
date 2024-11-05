@@ -2,7 +2,7 @@ import { Tour } from "onborda/dist/types";
 
 export const tour: Tour[] = [
   {
-    tour: "X-Ray Insight",
+    tour: "X-Ray Demo",
     steps: [
       {
         icon: <>👋</>,
@@ -15,7 +15,7 @@ export const tour: Tour[] = [
           </>
         ),
         selector: "#upload-form",
-        side: "right",
+        side: "bottom",
         showControls: true,
         pointerPadding: 0,
         pointerRadius: 0,
@@ -34,7 +34,7 @@ export const tour: Tour[] = [
           </>
         ),
         selector: "#pred-carousel",
-        side: "left",
+        side: "top",
         showControls: true,
         pointerPadding: 0,
         pointerRadius: 0,
