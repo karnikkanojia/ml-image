@@ -104,7 +104,7 @@ const DisplayCarouselContent = ({ state }: { state: DataState }) => {
           <ImagePreview url={camImageUrl} />
           <Button
             className="mt-4 w-full"
-            onClick={() => setCamImageUrl(data?.name || "")}
+            onClick={() => setCamImageUrl(data?.data.name || "")}
           >
             Show Original
           </Button>
