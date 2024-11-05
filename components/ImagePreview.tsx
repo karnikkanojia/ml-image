@@ -19,7 +19,7 @@ const ImagePreview: React.FC<{ url: string }> = ({ url }) => {
     <div className="relative h-[400px] w-[400px]">
       <img
         ref={imageRef}
-        src={`/image?fileName=${url}`} // Initial src
+        src={`/api/image?fileName=${url}`} // Initial src
         onError={(e) => { e.currentTarget.src = "/chest_placeholder.jpeg"; }}
         alt="Chest Xray images probably overlapped with heatmaps for identification."
         width={400}
