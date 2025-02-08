@@ -10,7 +10,7 @@ export const FormSchema = z.object({
     )
     .max(5, "Maximum of 5 files allowed.")
     .min(1, "At least one file is required."),
-  cam: z.array(z.string()).min(1, "Select at least one Grad-CAM method."),
+  cam: z.array(z.string()).min(1, "Select at least one Grad-CAM method.").default(["layercam"]),
   topk: z.string().min(1, "Number must be greater than 0."),
 });
 

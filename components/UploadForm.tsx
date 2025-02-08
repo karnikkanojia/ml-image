@@ -23,6 +23,7 @@ import {
   FileUploaderItem,
   FileInput,
 } from "@/components/ui/file-uploader";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { UploadIcon, Paperclip } from "lucide-react";
 import { FormValues, FormSchema, DataState } from "@/lib/definitions";
@@ -36,12 +37,11 @@ const gradcamOptions = [
 ];
 
 const UploadForm = () => {
-
   const formHook = useForm<FormValues>({
     mode: "onBlur",
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      cam: [],
+      cam: ["layercam"],
       topk: "5",
       files: [],
     },
@@ -54,7 +54,6 @@ const UploadForm = () => {
   };
 
   const { dispatch } = useContext(DataContext);
-
 
   return (
     <aside
@@ -74,17 +73,18 @@ const UploadForm = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 formHook.handleSubmit((data) => {
-                  let dataArr = data.files.map((file) => (
-                    {
-                      file: file,
-                      topk: parseInt(data.topk),
-                      camMethods: data.cam,
-                      predictions: {},
-                      name: file.name,
-                      fetched: false,
-                      data: {},
-                    } as DataState
-                  ));
+                  let dataArr = data.files.map(
+                    (file) =>
+                      ({
+                        file: file,
+                        topk: parseInt(data.topk),
+                        camMethods: data.cam,
+                        predictions: {},
+                        name: file.name,
+                        fetched: false,
+                        data: {},
+                      } as DataState)
+                  );
                   for (const data of dataArr) {
                     dispatch({
                       type: DataStateActions.ADD_DATA,
@@ -101,26 +101,12 @@ const UploadForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Method</FormLabel>
-                    <MultiSelector
-                      onValuesChange={field.onChange}
-                      values={field.value}
-                    >
-                      <MultiSelectorTrigger>
-                        <MultiSelectorInput placeholder="Select methods" />
-                      </MultiSelectorTrigger>
-                      <MultiSelectorContent>
-                        <MultiSelectorList>
-                          {gradcamOptions.map((option) => (
-                            <MultiSelectorItem
-                              key={option.value}
-                              value={option.value}
-                            >
-                              {option.label}
-                            </MultiSelectorItem>
-                          ))}
-                        </MultiSelectorList>
-                      </MultiSelectorContent>
-                    </MultiSelector>
+                    <Input
+                      id="method"
+                      value={["layercam"]}
+                      readOnly
+                      className="bg-gray-900 border-gray-700 cursor-not-allowed"
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
